@@ -7,7 +7,7 @@ repository = "https://github.com/newtoallofthis123/correct_word"
 license = "MIT"
 authors = ["NoobScience <noobscience@duck.com>"]
 keywords = ["did-you-mean", "correct_word", "levenstein"]
-categories = ["text-processing", "string-algorithms"]
+categories = ["text-processing"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

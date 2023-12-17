@@ -1,10 +1,15 @@
 pub mod levenshtein;
 
-/// # Type: Correct Word
-/// This is a tuple of an optional string and a u16. The string is the corrected word, and the u16 is the distance between the input and the corrected word.
-/// The distance is a characteristic property of the algorithm you use to correct the word. In most
-/// cases, the lower the distance, the better the correction.
-pub type CorrectWord = (Option<String>, u16);
+/// # Struct: Correct Word
+/// A struct used to represent the result of the correct function.
+/// It has the word and the confidence of the correction.
+/// The word is an optional string, because the function might not be able to correct the word, given the threshold.
+/// The confidence is the distance between the input and the corrected word.
+/// The lower the distance, the better the correction.
+pub struct CorrectWord{
+    pub word: Option<String>,
+    pub confidence: u16,
+}
 
 /// # Enum: Algorithm
 /// This enum defines the algorithms that can be used to correct a word.
@@ -19,7 +24,7 @@ pub type CorrectWord = (Option<String>, u16);
 /// use correct_word::Algorithm;
 ///
 /// let result = correct(Algorithm::Levenshtein, "hilo", vec!["hello", "world"], Some(5));
-/// assert_eq!(result.0.unwrap(), "hello");
+/// assert_eq!(result.word.unwrap(), "hello");
 /// ```
 pub enum Algorithm {
     Levenshtein,
@@ -46,7 +51,7 @@ pub enum Algorithm {
 /// use correct_word::Algorithm;
 ///
 /// let result = correct(Algorithm::Levenshtein, "hilo", vec!["hello", "world"], Some(5));
-/// assert_eq!(result.0.unwrap(), "hello");
+/// assert_eq!(result.word.unwrap(), "hello");
 /// ```
 ///
 /// # Note
@@ -72,17 +77,21 @@ pub fn correct_word(
             }
         };
         if distance < best_distance {
-            eprintln!("{} is better than {}", option, best);
-            eprintln!("{} is better than {}", distance, best_distance);
             best = option.to_string();
             best_distance = distance;
         }
     });
 
     if best_distance > threshold.unwrap_or(0) as u16 {
-        (None, best_distance)
+        CorrectWord {
+            word: None,
+            confidence: best_distance,
+        }
     } else {
-        (Some(best), best_distance)
+        CorrectWord {
+            word: Some(best),
+            confidence: best_distance,
+        }
     }
 }
 
@@ -98,6 +107,6 @@ mod tests {
             vec!["hello", "world"],
             Some(5),
         );
-        assert_eq!(result.0.unwrap(), "hello");
+        assert_eq!(result.word.unwrap(), "hello");
     }
 }
