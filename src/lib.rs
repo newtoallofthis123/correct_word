@@ -20,10 +20,10 @@ pub struct CorrectWord{
 /// # Example
 /// This enum is used as an argument to the correct function.
 /// ```
-/// use correct_word::correct;
+/// use correct_word::correct_word;
 /// use correct_word::Algorithm;
 ///
-/// let result = correct(Algorithm::Levenshtein, "hilo", vec!["hello", "world"], Some(5));
+/// let result = correct_word(Algorithm::Levenshtein, "hilo".to_string(), vec!["hello".to_string(), "world".to_string()], Some(5));
 /// assert_eq!(result.word.unwrap(), "hello");
 /// ```
 pub enum Algorithm {
@@ -47,10 +47,10 @@ pub enum Algorithm {
 ///
 /// # Example
 /// ```
-/// use correct_word::correct;
+/// use correct_word::correct_word;
 /// use correct_word::Algorithm;
 ///
-/// let result = correct(Algorithm::Levenshtein, "hilo", vec!["hello", "world"], Some(5));
+/// let result = correct_word(Algorithm::Levenshtein, "hilo".to_string(), vec!["hello".to_string(), "world".to_string()], Some(5));
 /// assert_eq!(result.word.unwrap(), "hello");
 /// ```
 ///
@@ -64,8 +64,8 @@ pub enum Algorithm {
 /// Usually, a threshold of 5 is a good value.
 pub fn correct_word(
     algorithm: Algorithm,
-    input: &str,
-    options: Vec<&str>,
+    input: String,
+    options: Vec<String>,
     threshold: Option<u8>,
 ) -> CorrectWord {
     let mut best = String::new();
@@ -103,8 +103,8 @@ mod tests {
     fn levenshtein_test() {
         let result = correct_word(
             Algorithm::Levenshtein,
-            "hilo",
-            vec!["hello", "world"],
+            "hilo".to_string(),
+            vec!["hello".to_string(), "world".to_string()],
             Some(5),
         );
         assert_eq!(result.word.unwrap(), "hello");
