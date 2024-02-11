@@ -103,10 +103,10 @@ mod tests {
     fn levenshtein_test() {
         let result = correct_word(
             Algorithm::Levenshtein,
-            "hilo".to_string(),
-            vec!["hello".to_string(), "world".to_string()],
+            "he".to_string(),
+            vec!["hello".to_string(), "world".to_string(), "hi".to_string()],
             Some(5),
         );
-        assert_eq!(result.word.unwrap(), "hello");
+        assert_eq!(result.word.unwrap(), "hi");
     }
 }
